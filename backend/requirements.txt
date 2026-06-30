@@ -110,7 +110,9 @@ packaging==24.2
 pandas==2.3.3
 pandocfilters==1.5.1
 parso==0.8.4
-pillow==12.0.0
+pdfminer.six==20260107
+pdfplumber==0.11.10
+pillow==12.2.0
 platformdirs==4.3.6
 prometheus_client==0.21.1
 prompt_toolkit==3.0.50
@@ -128,9 +130,11 @@ pygame==2.6.1
 Pygments==2.19.1
 PyJWT==2.10.1
 pyparsing==3.3.1
+pypdfium2==5.11.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
 python-json-logger==3.2.1
+python-multipart==0.0.32
 pytz==2025.2
 pywin32==308
 pywinpty==2.0.15

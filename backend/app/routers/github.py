@@ -5,19 +5,19 @@ from app.services.gemini_service import test_gemini, analyze_github_profile
 router = APIRouter()
 
 
-@router.get("/{username}")
-def get_github_profile(username: str):
-    return get_profile(username)
+#@router.get("/{username}")
+#def get_github_profile(username: str):
+#    return get_profile(username)
 
-@router.get("/{username}/repos")
-def github_repositories(username: str):
-    return get_repositories(username)
+#@router.get("/{username}/repos")
+#def github_repositories(username: str):
+#    return get_repositories(username)
 
-@router.get("/gemini/test")
-def gemini_test():
-    return {
-        "response": test_gemini()
-    }
+#@router.get("/gemini/test")
+#def gemini_test():
+#    return {
+#        "response": test_gemini()
+#    }
 
 
 @router.get("/{username}/analyze")

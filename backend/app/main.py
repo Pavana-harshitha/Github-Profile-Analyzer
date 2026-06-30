@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.routers.github import router as github_router
+from app.routers.linkedin import router as linkedin_router
 
 app = FastAPI()
 
@@ -9,6 +10,12 @@ app.include_router(
     tags=["GitHub"]
 )
 
+app.include_router(
+    linkedin_router,
+    prefix="/api/linkedin",
+    tags=["LinkedIn"]
+)
+
 @app.get("/")
-def root():
+def home():
     return {"message": "GitHub Profile Analyzer API is running!"}
