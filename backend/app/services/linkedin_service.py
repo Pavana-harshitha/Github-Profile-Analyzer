@@ -47,6 +47,8 @@ Return:
 5. Missing Improvements
 6. Quick Fixes
 7. Job Readiness Level
+
+
 """
 
     response = client.models.generate_content(
