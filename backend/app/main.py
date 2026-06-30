@@ -25,4 +25,4 @@ app.include_router(
 
 @app.get("/")
 def home():
-    return {"message": "GitHub Profile Analyzer API is running!"}
+    return {"message": "Profile Analyzer API is running!"}

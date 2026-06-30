@@ -31,7 +31,6 @@ def get_profile(username: str):
     except httpx.HTTPStatusError:
         return {"error": "GitHub returned an unexpected error."}
 
-
 def get_repositories(username: str):
     url = f"https://api.github.com/users/{username}/repos"
 
@@ -49,12 +48,35 @@ def get_repositories(username: str):
 
         total_stars = 0
         total_forks = 0
+        total_commits = 0
+
         language_count = {}
 
         top_repository = None
         max_stars = -1
 
         for repo in repos:
+
+            repo_name = repo.get("name")
+            commit_url = f"https://api.github.com/repos/{username}/{repo_name}/commits"
+
+            try:
+                commit_response = httpx.get(commit_url, timeout=10)
+
+                if commit_response.status_code == 200:
+                    commits = commit_response.json()
+
+                    if isinstance(commits, list):
+                        commit_count = len(commits)
+                    else:
+                        commit_count = 0
+                else:
+                    commit_count = 0
+
+            except Exception:
+                commit_count = 0
+
+            total_commits += commit_count
 
             # Repository details
             repository_list.append({
@@ -63,6 +85,7 @@ def get_repositories(username: str):
                 "language": repo.get("language"),
                 "stars": repo.get("stargazers_count"),
                 "forks": repo.get("forks_count"),
+                "commits": commit_count,
                 "html_url": repo.get("html_url"),
                 "created_at": repo.get("created_at"),
                 "updated_at": repo.get("updated_at"),
@@ -78,17 +101,16 @@ def get_repositories(username: str):
             language = repo.get("language")
 
             if language:
-                if language in language_count:
-                    language_count[language] += 1
-                else:
-                    language_count[language] = 1
+                language_count[language] = (
+                    language_count.get(language, 0) + 1
+                )
 
-            # Find repository with highest stars
+            # Find top repository by stars
             if repo.get("stargazers_count", 0) > max_stars:
                 max_stars = repo.get("stargazers_count", 0)
                 top_repository = repo.get("name")
 
-        # Find most used language
+        # Most used language
         most_used_language = None
 
         if language_count:
@@ -96,24 +118,26 @@ def get_repositories(username: str):
                 language_count,
                 key=language_count.get
             )
-        sorted_repositories = sorted(
-        repository_list,
-        key=lambda repo: repo["stars"],
-        reverse=True
-        )
-        top_repositories = sorted_repositories[:5]
+
+        # Top 5 repositories
+        top_repositories = sorted(
+            repository_list,
+            key=lambda repo: repo["stars"],
+            reverse=True
+        )[:5]
 
         return {
             "statistics": {
                 "total_repositories": len(repos),
                 "total_stars": total_stars,
                 "total_forks": total_forks,
+                "total_commits": total_commits,
                 "most_used_language": most_used_language,
                 "top_repository": top_repository,
             },
-             "language_distribution": language_count,
-             "top_repositories": top_repositories,
-             "repositories": repository_list,
+            "language_distribution": language_count,
+            "top_repositories": top_repositories,
+            "repositories": repository_list,
         }
 
     except httpx.RequestError:

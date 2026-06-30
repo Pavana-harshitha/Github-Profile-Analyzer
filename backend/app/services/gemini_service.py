@@ -67,6 +67,7 @@ Evaluate the GitHub profile and return:
      • consistency (if available)
      • diversity of languages
      • presence of projects
+     • no.of commits and commits history in every project
      • activity level (updated_at if available)
    - Do NOT guess private data
    - Keep scoring simple and explainable
@@ -77,7 +78,7 @@ Evaluate the GitHub profile and return:
 
 4. What needs IMPROVEMENT (max 3 points)
 
-5. Quick Fixes (actionable steps student can do in 1–2 days)
+5. Quick Fixes (actionable steps student can do in 1-2 days)
 
 6. Project Ideas (max 3 simple ideas based on current skill level)
 
@@ -96,3 +97,6 @@ OUTPUT FORMAT RULES:
     )
 
     return response.text
+
+
+#improvements: add exponential backoff,model switching in case of failing

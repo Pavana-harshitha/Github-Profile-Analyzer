@@ -1,7 +1,8 @@
 from fastapi import APIRouter
-from app.services.github_service import get_profile
 from app.services.github_service import get_profile, get_repositories
-from app.services.gemini_service import test_gemini, analyze_github_profile
+from app.services.github_service import get_profile
+from app.services.gemini_service import analyze_github_profile
+
 router = APIRouter()
 
 

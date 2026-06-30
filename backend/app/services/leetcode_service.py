@@ -28,7 +28,6 @@ def fetch_leetcode_profile(username: str):
         return {"error": str(e)}
     
 
-
 def analyze_leetcode_profile(data: dict):
 
     prompt = f"""
@@ -58,7 +57,38 @@ TASK:
 
 Return:
 
-1. Coding Profile Score (0–100)
+1. Coding Profile Score (0-100)
+Calculate a Coding Profile Score (0-100) using ONLY the following criteria.
+
+Scoring Criteria (100 points total):
+
+    1. Total Problems Solved (40 points)
+    - 0-50 problems → 0-10 points
+    - 51-150 problems → 11-25 points
+    - 151-300 problems → 26-35 points
+    - More than 300 problems → 36-40 points
+
+    2. Difficulty Distribution (30 points)
+    Evaluate the balance of Easy, Medium, and Hard problems.
+    - More Medium and Hard problems should receive higher marks.
+    - Students solving only Easy problems should receive lower marks.
+
+    3. Contest Rating (20 points)
+    - If contest rating is unavailable, award 0 points.
+    - Higher ratings should receive proportionally higher marks.
+
+    4. Overall Coding Maturity (10 points)
+    Consider:
+    - Balanced problem-solving
+    - Evidence of progression
+    - Consistency based only on the provided statistics
+
+    Rules:
+    - Do NOT assume any missing information.
+    - If a metric is unavailable, award 0 for that metric.
+    - The final score MUST equal the sum of all category scores.
+    - Be strict but fair.
+
 2. Skill Level (Beginner / Intermediate / Advanced)
 3. Strengths (max 3 bullets)
 4. Weaknesses (max 3 bullets)
